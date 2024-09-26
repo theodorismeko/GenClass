@@ -2,28 +2,42 @@ import { useState } from 'react';
 import { runGenClass } from '../services/api';
 import { parseGenClassOutput } from '../utils/parseGenClassOutput';
 
-function useGenClass() {
+const useGenClass = () => {
   const [genClassParams, setGenClassParams] = useState({
-    train_path: '',
-    test_path: '',
-    generations: 100,
-    output_format: 'csv'
-  });
+        count: 500,
+        gens: 200,
+        threads: 16,
+        srate: 0.10,
+        mrate: 0.05,
+        size: 100,
+        train_file: '../examples/ionosphere.train',
+        test_file: '../examples/ionosphere.test',
+        output_method: 'csv',
+        seed: null
+        });
+
   const [genClassOutput, setGenClassOutput] = useState(null);
 
   const handleGenClassParamChange = (event) => {
     const { name, value } = event.target;
-    setGenClassParams(prevParams => ({
-      ...prevParams,
-      [name]: name === 'generations' ? parseInt(value, 10) : value
+    setGenClassParams((prev) => ({
+      ...prev,
+      [name]: ['gens', 'count', 'threads', 'size', 'seed'].includes(name) ? parseInt(value, 10) :
+              ['srate', 'mrate'].includes(name) ? parseFloat(value) : value,
     }));
   };
 
   const runGenClassAlgorithm = async () => {
     try {
       const response = await runGenClass(genClassParams);
+      console.log('API response:', response.data);
       if (response.data.output) {
         const parsedOutput = parseGenClassOutput(response.data.output);
+
+        // Ensure fallback values for error rates
+        parsedOutput.trainError = parsedOutput.trainError || 0;
+        parsedOutput.classError = parsedOutput.classError || 0;
+
         setGenClassOutput(parsedOutput);
       } else if (response.data.error) {
         console.error(`Error: ${response.data.error}`);
@@ -39,6 +53,7 @@ function useGenClass() {
     handleGenClassParamChange,
     runGenClass: runGenClassAlgorithm
   };
+
 }
 
 export default useGenClass;

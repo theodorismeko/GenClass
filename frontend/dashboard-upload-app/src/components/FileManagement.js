@@ -5,9 +5,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 function FileManagement({ files, loading, onFileUpload, onDeleteFile }) {
   return (
     <>
-      <Typography variant="h6" gutterBottom>File Management</Typography>
+      <Typography variant="h6" align='center'>File Management</Typography>
       <input
-        accept=".train,.test"
+        accept=".train, .test, .bnf"
         style={{ display: 'none' }}
         id="file-upload"
         type="file"

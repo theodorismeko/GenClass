@@ -6,8 +6,8 @@ function ErrorChart({ trainError, classError }) {
     <BarChart
       xAxis={[{ scaleType: 'band', data: ['Train Error', 'Class Error'] }]}
       series={[{ data: [trainError, classError] }]}
-      width={400}
-      height={300}
+      width={450}
+      height={380}
     />
   );
 }
