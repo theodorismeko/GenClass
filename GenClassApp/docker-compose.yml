@@ -1,0 +1,22 @@
+services:
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./examples:/code/examples
+    restart: unless-stopped
+
+
+  frontend:
+    build: 
+      context: ./frontend/dashboard-upload-app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./examples:/code/examples
+    restart: unless-stopped
+
