@@ -1,11 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import { fetchFiles, uploadFile, deleteFile } from '../services/api';
+import { fetchFiles, uploadFile, deleteFile } from '../services/api';  // Ensure this path is correct
 
 function useFiles() {
-  const [files, setFiles] = useState(() => {
-    const savedFiles = localStorage.getItem('files');
-    return savedFiles ? JSON.parse(savedFiles) : [];
-  });
+  const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'info' });
 
@@ -25,50 +22,44 @@ function useFiles() {
     try {
       const response = await fetchFiles();
       setFiles(response.data);
-      localStorage.setItem('files', JSON.stringify(response.data));
     } catch (error) {
       console.error('Error fetching files:', error);
       showSnackbar('Error fetching files', 'error');
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }, []);
 
   useEffect(() => {
     refreshFiles();
   }, [refreshFiles]);
 
-  const handleFileUpload = async (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    if (files.includes(file.name)) {
-      showSnackbar('File already exists', 'warning');
-      return;
-    }
-
+  const handleFileUpload = async (file, fileType) => {
     setLoading(true);
     try {
-      await uploadFile(file);
+      await uploadFile(file, fileType);
       await refreshFiles();
       showSnackbar('File uploaded successfully', 'success');
     } catch (error) {
       console.error('Error uploading file:', error);
-      showSnackbar('Error uploading file', 'error');
+      showSnackbar(error.response?.data?.detail || 'Error uploading file', 'error');
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
-  const handleDeleteFile = async (filename) => {
+  const handleDeleteFile = async (fileType, fileId) => {
     setLoading(true);
     try {
-      await deleteFile(filename);
+      await deleteFile(fileType, fileId);
       await refreshFiles();
       showSnackbar('File deleted successfully', 'success');
     } catch (error) {
       console.error('Error deleting file:', error);
       showSnackbar('Error deleting file', 'error');
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return {

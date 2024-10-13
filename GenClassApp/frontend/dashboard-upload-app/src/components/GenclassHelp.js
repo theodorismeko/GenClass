@@ -25,7 +25,7 @@ const GenclassHelp = () => {
   return (
     <div>
       <Typography variant="h6" gutterBottom>Genclass Help</Typography>
-      <pre style={{ padding: '20px', marginBottom: '20px' }}>{help}</pre>
+      <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word', padding: '20px', marginBottom: '20px' }}>{help}</pre>
     </div>
   );
 };

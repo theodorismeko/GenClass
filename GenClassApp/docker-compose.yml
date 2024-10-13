@@ -1,22 +1,74 @@
 services:
+  mongodb:
+    image: mongodb/mongodb-community-server
+    hostname: mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - app-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh mongodb://localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+
+  mongodbcompass:
+    image: mongo-express
+    restart: unless-stopped
+    ports:
+      - "28018:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: admin
+      ME_CONFIG_MONGODB_SERVER: mongodb
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
+
   backend:
-    build: 
+    build:
       context: ./backend
       dockerfile: Dockerfile
     ports:
       - "80:80"
-    volumes:
-      - ./examples:/code/examples
     restart: unless-stopped
-
+    depends_on:
+      - mongodb
+    environment:
+      - MONGODB_URL=mongodb://admin:admin@mongodb:27017/genclass?authSource=admin
+    networks:
+      - app-network
+    volumes:
+      - ./backend:/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 80 --reload
 
   frontend:
-    build: 
+    build:
       context: ./frontend/dashboard-upload-app
       dockerfile: Dockerfile
+    environment:
+      - REACT_APP_API_BASE_URL=http://backend:80
     ports:
       - "3000:3000"
-    volumes:
-      - ./examples:/code/examples
     restart: unless-stopped
+    depends_on:
+      - backend
+    networks:
+      - app-network
 
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge

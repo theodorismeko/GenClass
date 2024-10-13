@@ -3,3 +3,5 @@ uvicorn
 httpx
 python-multipart
 pydantic-settings
+motor
+pymongo

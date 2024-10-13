@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, Grid, Paper } from '@mui/material';
-import { PieChart } from '@mui/x-charts';
+import { PieChart } from '@mui/x-charts/PieChart';
 
 function ConfusionMatrixChart({ data }) {
   if (!data || data.length !== 4) return null;
@@ -16,7 +16,7 @@ function ConfusionMatrixChart({ data }) {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12}>
+      <Grid item xs={8}>
         <Typography variant="h6" align="center"></Typography>
         <PieChart
           series={[
@@ -51,9 +51,8 @@ function ConfusionMatrixChart({ data }) {
           <Typography>True Negative: {tn}</Typography>
         </Paper>
       </Grid>
-      </Grid>
+    </Grid>
   );
 }
 
 export default ConfusionMatrixChart;
-

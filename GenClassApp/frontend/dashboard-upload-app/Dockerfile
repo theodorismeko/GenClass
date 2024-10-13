@@ -1,20 +1,33 @@
-# Use an official Node runtime as a parent image
-FROM node:20
+# Build stage
+FROM node:20 as build
 
-# Set the working directory in the container
 WORKDIR /app
 
-# Copy the package.json and install dependencies
-COPY package*.json ./ 
+# Copy package files
+COPY package*.json ./
 
-# Install project dependencies
-RUN npm install
+# Install dependencies
+RUN npm ci
 
-# Copy the entire frontend application to the container
-COPY . . 
+# Copy the app source code
+COPY . .
 
-# Make port 3000 available to the world outside this container
+# Build the app
+RUN npm run build
+
+# Production stage
+FROM node:20-slim
+
+WORKDIR /app
+
+# Install serve
+RUN npm install -g serve
+
+# Copy built assets from build stage
+COPY --from=build /app/build ./build
+
+# Expose port
 EXPOSE 3000
 
-# Run npm start when the container launches
-CMD ["npm", "start"]
+# Start the app
+CMD ["serve", "-s", "build", "-l", "3000"]

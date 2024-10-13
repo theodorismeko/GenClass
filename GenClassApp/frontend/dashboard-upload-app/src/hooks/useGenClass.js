@@ -4,17 +4,18 @@ import { parseGenClassOutput } from '../utils/parseGenClassOutput';
 
 const useGenClass = () => {
   const [genClassParams, setGenClassParams] = useState({
-        count: 500,
-        gens: 200,
-        threads: 16,
-        srate: 0.10,
-        mrate: 0.05,
-        size: 100,
-        train_file: '../examples/ionosphere.train',
-        test_file: '../examples/ionosphere.test',
-        output_method: 'csv',
-        seed: null
-        });
+    count: 500,
+    gens: 200,
+    threads: 16,
+    srate: 0.10,
+    mrate: 0.05,
+    size: 100,
+    train_file: '',
+    test_file: '',
+    output_method: 'csv',
+    grammar: '',
+    seed: null
+  });
 
   const [genClassOutput, setGenClassOutput] = useState(null);
 
