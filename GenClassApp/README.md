@@ -15,7 +15,7 @@ Ensure you have the following installed on your system:
 
 ## Getting Started
 
-1. After setting up GenClass(Make sure files genclass executable, classifier.c, classifier.h & classifier.py are present in bin folder which is required to be at `backend/GenClassApp/bin`), ensure you are in the root directory of the project.
+1. After setting up GenClass(Make sure files genclass executable, classifier.c, classifier.h & classifier.py are present in bin folder which is required to be at `backend/GenClassApp/bin`), ensure you are in the root directory(GenClassApp) of the project.
 
 2. Build and start the Docker containers:
    ```
@@ -24,7 +24,7 @@ Ensure you have the following installed on your system:
 
 3. Once the containers are up and running, you can access:
    - Frontend: http://localhost:3000
-   - Backend API: http://localhost:80
+   - Backend API: http://localhost:80/docs
    - MongoDB Compass (Database GUI): http://localhost:8081
 
 ## Services
