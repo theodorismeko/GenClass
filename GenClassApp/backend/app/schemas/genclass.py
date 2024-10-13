@@ -4,6 +4,7 @@ from pydantic import BaseModel, Field, ConfigDict
 
 class GenClass(BaseModel):
     count: int = Field(default=500, description="Number of chromosomes")
+    fold_count: int = Field(default=0, description="Fold count for fold validation")
     gens: int = Field(default=200, description="Maximum number of generations")
     threads: int = Field(default=16, description="Maximum number of threads for OpenMp")
     srate: float = Field(default=0.10, description="Selection rate")
@@ -21,6 +22,7 @@ class GenClass(BaseModel):
        json_schema_extra = {
             "example": {
                 "count": 500,
+                "fold_count": 0,
                 "gens": 200,
                 "threads": 16,
                 "srate": 0.10,

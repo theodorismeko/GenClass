@@ -33,3 +33,4 @@ async def shutdown_db_client():
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
+

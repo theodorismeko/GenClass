@@ -72,6 +72,17 @@ function GenClassForm({ params, onChange, onRun, files }) {
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
+          label="Fold Count"
+          name="fold_count"
+          type="number"
+          value={params.fold_count || 0}
+          onChange={onChange}
+          inputProps={{ min: 0 }}
+        />
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <TextField
+          fullWidth
           label="Maximum Generations"
           name="gens"
           type="number"
@@ -126,17 +137,6 @@ function GenClassForm({ params, onChange, onRun, files }) {
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
-          label="Threads for OpenMP"
-          name="threads"
-          type="number"
-          value={params.threads || ''}
-          inputProps={{ step: 1, min: 0, max: 16 }}
-          onChange={onChange}
-        />
-      </Grid>
-      <Grid item xs={12} sm={12}>
-        <TextField
-          fullWidth
           select
           label="Output Method"
           name="output_method"
@@ -148,6 +148,18 @@ function GenClassForm({ params, onChange, onRun, files }) {
           <MenuItem value="full">Full</MenuItem>
         </TextField>
       </Grid>
+      <Grid item xs={12} sm={6}>
+        <TextField
+          fullWidth
+          label="Threads for OpenMP"
+          name="threads"
+          type="number"
+          value={params.threads || ''}
+          inputProps={{ step: 1, min: 0, max: 16 }}
+          onChange={onChange}
+        />
+      </Grid>
+   
       
       <Grid item xs={12}>
         <Button  variant="contained" color="primary" onClick={onRun}>

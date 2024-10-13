@@ -14,16 +14,6 @@ genclass_router = APIRouter(tags=["Execution of Genclass"])
 @genclass_router.post("/run-genclass/")
 async def run_genclass(params: GenClass, db: AsyncIOMotorDatabase = Depends(get_db)):
     try:
-        # Retrieve files from MongoDB
-        # train_file = await db.train_files.find_one({"filename": params.train_file})
-        # test_file = await db.test_files.find_one({"filename": params.test_file})
-        
-        # if not train_file or not test_file:
-        #     missing_files = []
-        #     if not train_file: missing_files.append("train")
-        #     if not test_file: missing_files.append("test")
-        #     raise HTTPException(status_code=404, detail=f"Required files not found in database: {', '.join(missing_files)}")
-        
         train_file = None
         if params.train_file:
             train_file = await db.train_files.find_one({"filename": params.train_file})
@@ -56,6 +46,7 @@ async def run_genclass(params: GenClass, db: AsyncIOMotorDatabase = Depends(get_
             command = [
                 "./bin/genclass", 
                 "-c", str(params.count),
+                "-f", str(params.fold_count),
                 "-g", str(params.gens),
                 "-d", str(params.threads),
                 "-s", f"{params.srate:.2f}",
@@ -65,6 +56,10 @@ async def run_genclass(params: GenClass, db: AsyncIOMotorDatabase = Depends(get_
                 "-t", test_path,
                 "-o", params.output_method
             ]
+            
+            # Add fold count if provided
+            if params.fold_count > 0:
+                command.extend(["-f", str(params.fold_count)])
 
             # Add grammar file to command if provided
             if grammar_file:

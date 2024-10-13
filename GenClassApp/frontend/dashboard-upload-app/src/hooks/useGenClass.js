@@ -5,6 +5,7 @@ import { parseGenClassOutput } from '../utils/parseGenClassOutput';
 const useGenClass = () => {
   const [genClassParams, setGenClassParams] = useState({
     count: 500,
+    fold_count: 0,
     gens: 200,
     threads: 16,
     srate: 0.10,
@@ -23,7 +24,7 @@ const useGenClass = () => {
     const { name, value } = event.target;
     setGenClassParams((prev) => ({
       ...prev,
-      [name]: ['gens', 'count', 'threads', 'size', 'seed'].includes(name) ? parseInt(value, 10) :
+      [name]: ['gens', 'count', 'threads', 'size', 'seed', 'fold_count'].includes(name) ? parseInt(value, 10) :
               ['srate', 'mrate'].includes(name) ? parseFloat(value) : value,
     }));
   };
