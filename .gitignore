@@ -106,12 +106,6 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# Specific to your project
-bin/
-examples/Grammar.bnf
-examples/genclass
-examples/ionosphere.test
-examples/ionosphere.train
 
 # MongoDB related
 **/bson/
