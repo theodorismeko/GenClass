@@ -24,7 +24,7 @@ Ensure you have the following installed on your system:
 
 3. Once the containers are up and running, you can access:
    - Frontend: http://localhost:3000
-   - Backend API: http://localhost:80
+   - Backend API: http://localhost:80/docs
    - MongoDB Compass (Database GUI): http://localhost:8081
 
 ## Services
