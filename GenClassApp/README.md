@@ -15,7 +15,7 @@ Ensure you have the following installed on your system:
 
 ## Getting Started
 
-1. After setting up GenClass(Make sure files genclass executable, classifier.c, classifier.h & classifier.py are present in bin folder which is required to be at `backend/GenClassApp/bin`), ensure you are in the root directory(GenClassApp) of the project.
+1. After setting up GenClass(Make sure files genclass executable, classifier.c, classifier.h & classifier.py are present in bin folder which is required to be at `GenClassApp/backend/bin`), ensure you are in the root directory(GenClassApp) of the project.
 
 2. Build and start the Docker containers:
    ```
