@@ -14,15 +14,17 @@ Ensure you have the following installed on your system:
 - Mongo Compass Application or use mongodbcompass from docker
 
 ## Getting Started
+1. Install the required pyhton libraries to run the app (while in GenClassApp folder run)
 
-1. After setting up GenClass(Make sure files genclass executable, classifier.c, classifier.h & classifier.py are present in bin folder which is required to be at `GenClassApp/backend/bin`), ensure you are in the root directory(GenClassApp) of the project.
+   `pip install -r requirements.txt`
+3. After setting up GenClass(Make sure files genclass executable, classifier.c, classifier.h & classifier.py are present in bin folder which is required to be at `GenClassApp/backend/bin`), ensure you are in the root directory(GenClassApp) of the project.
 
-2. Build and start the Docker containers:
+4. Build and start the Docker containers:
    ```
    docker-compose up -d
    ```
 
-3. Once the containers are up and running, you can access:
+5. Once the containers are up and running, you can access:
    - Frontend: http://localhost:3000
    - Backend API: http://localhost:80/docs
    - MongoDB Compass (Database GUI): http://localhost:8081
